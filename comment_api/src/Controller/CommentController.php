@@ -4,11 +4,11 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Comments;
+use App\Service\CommentManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-//mock controller for manual testing purposes
 class CommentController extends AbstractController
 {
     /**
@@ -16,15 +16,8 @@ class CommentController extends AbstractController
      */
     public function createComment(ManagerRegistry $doctrine): Response
     {
-        $entityManager = $doctrine->getManager();
-
-        $comment = new Comments();
-        $comment->setComment('it works');
-        $comment->setReplies(['a reply']);
-        $comment->setRate(1);
-
-        $entityManager->persist($comment);
-        $entityManager->flush();
+        $commentManager = new CommentManager();
+        $comment = $commentManager->saveComment($doctrine);
 
         return new Response('Comment saved with id '.$comment->getId());
     }
