@@ -23,15 +23,20 @@ class Comments
     private ?int $id = null;
 
     /**
-     * @ORM\Column(length=300)
+     * @ORM\Column(type="string", length=300)
      * @Assert\NotBlank()
      */
     public string $comment;
 
     /**
-     * @ORM\Column(length=300)
+     * @ORM\Column(type="array", length=300)
      */
-    public string $replies;
+    public array $replies;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    public ?int $rate;
 
 
     /******** METHODS ********/
@@ -47,11 +52,16 @@ class Comments
 
     public function getReplies(): ?string
     {
-        return $this->replies;
+        return implode(';', $this->replies);
+    }
+
+    public function getRate(): ?int
+    {
+        return $this->rate;
     }
 
     public function __toString()
     {
-        return $this->comment . ' ' . $this->replies;
+        return $this->comment . ' ' . implode(';',$this->replies) . $this->rate;
     }
 }
