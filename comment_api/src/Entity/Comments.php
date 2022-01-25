@@ -60,6 +60,21 @@ class Comments
         return $this->rate;
     }
 
+    public function setComment(string $comment): ?string
+    {
+        return $this->comment = $comment;
+    }
+
+    public function setReplies(array $replies): ?array
+    {
+        return $this->replies = $replies;
+    }
+
+    public function setRate(int $rate): ?int
+    {
+        return $this->rate = $rate;
+    }
+
     public function __toString()
     {
         return $this->comment . ' ' . implode(';',$this->replies) . $this->rate;
